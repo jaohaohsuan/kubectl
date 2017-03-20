@@ -11,6 +11,7 @@ podTemplate(label: 'image-builder', containers: [
 ],
         volumes: [
                 hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
+                hostPathVolume(mountPath: '/root/.kube/config', hostPath: '/root/.kube/config')
         ],
         workspaceVolume: persistentVolumeClaimWorkspaceVolume(claimName: 'jenkins-workspace', readOnly: false)
 ) {
@@ -34,7 +35,7 @@ podTemplate(label: 'image-builder', containers: [
             }
 
             stage('test') {
-                sh "docker run ${imgSha} kubectl get po"
+                sh "docker run -v /root/.kube/config:/root/.kube/config ${imgSha} kubectl get po"
             }
 
             stage('deploy') {

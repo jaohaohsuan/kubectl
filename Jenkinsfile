@@ -12,8 +12,7 @@ podTemplate(label: 'image-builder', containers: [
         volumes: [
                 hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
                 hostPathVolume(mountPath: '/root/.kube/config', hostPath: '/root/.kube/config')
-        ],
-        workspaceVolume: persistentVolumeClaimWorkspaceVolume(claimName: 'jenkins-workspace', readOnly: false)
+        ]
 ) {
     properties([
             pipelineTriggers([]),
